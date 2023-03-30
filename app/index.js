@@ -29,14 +29,14 @@ export default function App() {
   return (
     <Provider>
       <Appbar.Header>
-        <Appbar.Content title="Login"/>
+        <Appbar.Content title="sharemeal"/>
       </Appbar.Header>
       <View style={styles.container}>
         <StatusBar style="auto" />
         {loading==true ? <ActivityIndicator size={24} color={'black'}/> :(
             <Card style={{height:'auto',width:'90%'}}>
            
-            <Card.Cover source={{uri:'https://lh3.googleusercontent.com/9kq1UNUjO1F86J4xvya2O-4mcUo24djjcqqoNiiL6Gtn59yoIUjWF8qMuUti1xXNbkY0MjZAu5vnSA4Ah0Df0Sbu2p42GVvivnX-yj6jS8uGOOjowMg=w1400-v0'}}/>
+            <Card.Cover source={{uri:'https://i.ibb.co/4d376Jv/materialu.png'}}/>
            
             <Card.Content style={{margin:5}}>
              
