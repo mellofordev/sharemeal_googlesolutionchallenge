@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { Alert, StyleSheet, Text, View,SafeAreaView, ActivityIndicator } from 'react-native';
-import MapView from 'react-native-maps';
+import { Alert, StyleSheet, View } from 'react-native';
+
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import { Card, Provider ,TextInput,Text as PaperText, Appbar, Button} from 'react-native-paper';
+import { Card, Provider ,TextInput, Appbar, Button, ActivityIndicator} from 'react-native-paper';
+import { Link } from 'expo-router';
 export default function App() {
   const [location,setLocation] = useState();
   const [loading,setLoading] = useState(true);
@@ -32,19 +33,23 @@ export default function App() {
       </Appbar.Header>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Card style={{height:'auto',width:'90%'}}>
+        {loading==true ? <ActivityIndicator size={24} color={'black'}/> :(
+            <Card style={{height:'auto',width:'90%'}}>
            
-           <Card.Cover source={{uri:'https://lh3.googleusercontent.com/9kq1UNUjO1F86J4xvya2O-4mcUo24djjcqqoNiiL6Gtn59yoIUjWF8qMuUti1xXNbkY0MjZAu5vnSA4Ah0Df0Sbu2p42GVvivnX-yj6jS8uGOOjowMg=w1400-v0'}}/>
-          
-           <Card.Content style={{margin:5}}>
-            
-             <TextInput label="username" style={{marginBottom:30}}/>
-             <TextInput label="password"/>
-           </Card.Content>
-           <Card.Actions >
-              <Button>Login</Button>
-           </Card.Actions>
-        </Card>
+            <Card.Cover source={{uri:'https://lh3.googleusercontent.com/9kq1UNUjO1F86J4xvya2O-4mcUo24djjcqqoNiiL6Gtn59yoIUjWF8qMuUti1xXNbkY0MjZAu5vnSA4Ah0Df0Sbu2p42GVvivnX-yj6jS8uGOOjowMg=w1400-v0'}}/>
+           
+            <Card.Content style={{margin:5}}>
+             
+              <TextInput label="username" style={{marginBottom:30}}/>
+              <TextInput label="password"/>
+            </Card.Content>
+            <Card.Actions >
+              <Link href={{pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
+                 <Button>Login</Button>
+              </Link>
+            </Card.Actions>
+         </Card>
+        )}
       </View>
     </Provider>
   );
