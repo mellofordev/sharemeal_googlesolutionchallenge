@@ -1,5 +1,5 @@
-import {View,StyleSheet,SafeAreaView, ScrollView,TouchableOpacity} from 'react-native';
-import { Appbar, Card,Text } from 'react-native-paper';
+import {View,StyleSheet,SafeAreaView, ScrollView,TouchableOpacity,Image} from 'react-native';
+import { Appbar, Card,Divider,Text } from 'react-native-paper';
 import MapView,{Marker, Polyline, PROVIDER_GOOGLE} from 'react-native-maps';
 import { useSearchParams } from 'expo-router';
 import { useState } from 'react';
@@ -47,13 +47,22 @@ export default function Home(){
                 <Card.Title title="Live"/>
                 
                 <Card.Content>
-                    <ScrollView contentContainerStyle={{flexGrow:1}}>
+                    <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:30}} showsVerticalScrollIndicator={false}>
                      {["Ananda Nilayam Orphnage","Nirmala Shishu Bhawan","Sree Chitra Home"].map((i)=>{
                         return(
                            <TouchableOpacity onPress={()=>{
                             setCoords({lat:8.509215084876823,long:76.95511843323422})
                            }}>
-                                <Text style={{fontSize:30,fontWeight:'600',margin:10}}>{i}</Text>
+                               <View style={styles.placeContianer}>
+                                  <View style={styles.placeDetials}>
+                                    <Text style={{fontSize:20,fontWeight:'600',margin:10}}>{i}</Text>
+                                    <Text style={{fontSize:15,fontWeight:'500',color:'grey',marginLeft:13}}>FTX+10 Kowdiar TVM</Text>
+                                  </View>
+                                  <Image source={{uri:'https://lh3.googleusercontent.com/t315gtXe-NaZuJYZATNVkEkkElrX6L34HwZHaZFvL8uNw-z0xgizPfX-8Gw3rLUP6uMXnz4x2OILJsh4ew-ys7XgWqd8YfdMsLQQFOG_9TB1Rfl2fnE'}}
+                                         style={{height:100,width:100,borderRadius:15,marginTop:5}}
+                                  />
+                               </View>
+                               <Divider/>
                            </TouchableOpacity>
                         );
                      })}
@@ -69,6 +78,16 @@ export default function Home(){
 const styles= StyleSheet.create({
     container:{
         flex:1,
-        
+
+    },
+    placeContianer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        marginBottom:15,
+        padding:3
+    },
+    placeDetials:{
+        flexDirection:'column'
     }
 });
