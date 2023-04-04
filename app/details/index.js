@@ -17,7 +17,7 @@ export default function Default (){
                 <Card.Cover  source={{uri:'https://lh3.googleusercontent.com/78oT8GROrcU1-CAKTdsCLUzhSnlS8l_YB33qv52wE1kBlqff0A77JYE8vStC1l__TG8hpqW7RniS-PIOL6fJfiEtEfv0OLpwKTmhYc94mSCzEuRApkMv=w1400-v0'}}/>
                 
             </Card>
-            <Text style={{fontSize:18,margin:5}}>{params.add}</Text>
+            <Text style={{fontSize:18,margin:15}}>{params.add}</Text>
             <Divider/>
         </View>
         </>
