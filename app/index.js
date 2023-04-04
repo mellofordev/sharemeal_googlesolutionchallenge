@@ -52,7 +52,7 @@ export default function App() {
           </Card>
 
           <View style={styles.auth}>
-            <Text style={styles.text}>Create new account :</Text>
+            <Text style={styles.text}>Create Provider account :</Text>
             <Link style={{marginTop:5}} href={'/auth/register'}>
                 <Button><Text style={styles.text}>Register</Text></Button>
             </Link>

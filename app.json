@@ -28,6 +28,11 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      },
       "package": "com.sharemeal.app"
     },
     "web": {

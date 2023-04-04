@@ -20,8 +20,8 @@ export default function Register(){
               <TextInput label="password"/>
             </Card.Content>
             <Card.Actions >
-              <Link href={'/home'} asChild>
-                <Button>Login</Button>
+              <Link href={'/provider'} asChild>
+                <Button>Register</Button>
               </Link>
             </Card.Actions>
         </Card>
