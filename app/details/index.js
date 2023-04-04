@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import { Appbar,Card,TextInput,Divider,Button} from 'react-native-paper';
 import { useSearchParams } from 'expo-router';
-import App from '..';
+
 export default function Default (){
     const [checked,setChecked]=useState(false);
     const params = useSearchParams();
