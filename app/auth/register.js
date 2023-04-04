@@ -16,8 +16,9 @@ export default function Register(){
           
             <Card.Content style={{margin:5}}>
             
-              <TextInput label="name" style={{marginBottom:30}}/>
-              <TextInput label="password"/>
+              <TextInput label="name" style={{marginBottom:20}}/>
+              <TextInput label="password" style={{marginBottom:20}}/>
+              <TextInput label="confirm password" />
             </Card.Content>
             <Card.Actions >
               <Link href={'/provider'} asChild>
