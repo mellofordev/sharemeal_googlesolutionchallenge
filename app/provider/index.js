@@ -1,14 +1,16 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 import { Appbar, Card, Checkbox, Divider, TextInput } from 'react-native-paper';
 
 export default function Provider(){
+    const router = useRouter();
     const [checked,setChecked] = useState(false);
     return(
         <>
         <Appbar.Header>
             <Appbar.Content title="Dashboard"/>
-            <Appbar.Action icon={"logout"} />
+            <Appbar.Action icon={"logout"} onPress={()=>{router.back();}}/>
         </Appbar.Header>
         <View style={styles.container}>
            <Card style={{width:'100%',height:'auto'}}>
