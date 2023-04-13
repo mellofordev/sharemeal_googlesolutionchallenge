@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Card, Provider ,TextInput, Appbar, Button, ActivityIndicator} from 'react-native-paper';
 import { Link } from 'expo-router';
 export default function App() {
-  const [location,setLocation] = useState();
+  const [location,setLocation] = useState({});
   const [loading,setLoading] = useState(true);
   
   useEffect(()=>{
@@ -42,7 +42,7 @@ export default function App() {
               <Card.Content style={{margin:5}}>
               
                 <TextInput label="username" style={{marginBottom:30}}/>
-                <TextInput label="password"/>
+                <TextInput label="password" secureTextEntry={true} />
               </Card.Content>
               <Card.Actions >
                 <Link href={{pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
