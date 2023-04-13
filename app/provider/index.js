@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {View,Text,StyleSheet} from 'react-native';
-import { Appbar, Card, Checkbox, Divider, TextInput } from 'react-native-paper';
+import { Appbar, Card, Checkbox, Divider, TextInput,Button } from 'react-native-paper';
 
 export default function Provider(){
     const router = useRouter();
@@ -30,6 +30,7 @@ export default function Provider(){
                         <Checkbox onPress={()=>{checked==true?setChecked(false):setChecked(true)}} status={checked==true?'checked':'unchecked'}/>
                     </View>
                 </Card.Content>
+                <Button>Submit</Button>
             </Card>
         </View>
         </>

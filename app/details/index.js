@@ -5,6 +5,7 @@ import { useSearchParams } from 'expo-router';
 
 export default function Default (){
     const [checked,setChecked]=useState(false);
+    const [request,setRequest] = useState('Request');
     const params = useSearchParams();
 
     return(
@@ -26,7 +27,7 @@ export default function Default (){
                 <Card.Content>
                     <Text style={{fontSize:25,marginBottom:15}}><Text style={{color:'grey'}}>Food :</Text>Briyani</Text>
                     <Text style={{fontSize:25}}><Text style={{color:'grey'}}>Content :</Text>500 ml</Text>
-                    <Button>Request</Button>
+                    <Button onPress={()=>{setRequest('Requested')}}>{request}</Button>
                 </Card.Content>
                 
             </Card>

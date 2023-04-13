@@ -17,7 +17,7 @@ export default function Home(){
     const [name , setName] = useState('');
     const apifetch=()=>{
         setLoading(true)
-        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=auditorium&location=8.4677426%2C76.9808251&radius=2000&type=auditorium&key=${MAP_API_KEY}`)
+        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=auditorium&location=${latitude}%2C${longitude}&radius=2000&type=auditorium&key=${MAP_API_KEY}`)
         .then(response=>response.json())
         .then(data=>{
             
@@ -80,7 +80,7 @@ export default function Home(){
                            }}>
                                <View style={styles.placeContianer}>
                                   <View style={styles.placeDetials}>
-                                    <Text style={{fontSize:20,fontWeight:'600',margin:10}}>{(i.name).slice(0,10)+'...'}</Text>
+                                    <Text style={{fontSize:20,fontWeight:'600',margin:10}}>{(i.name).slice(0,20)+'...'}</Text>
                                     <Text style={{fontSize:15,fontWeight:'500',color:'grey',marginLeft:13}}>{(i.vicinity).slice(0,10)+'...'}</Text>
                                   </View>
                                   {/* <Image source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${(i.photos)}&key=${MAP_API_KEY}`}}
