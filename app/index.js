@@ -5,10 +5,25 @@ import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 import { Card, Provider , ActivityIndicator} from 'react-native-paper';
 import { Link , useRouter} from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getAuth} from 'firebase/auth';
 export default function App() {
-  const [location,setLocation] = useState();
+  const [location,setLocation] = useState({});
   const [loading,setLoading] = useState(true);
-  
+  const [token ,setToken] = useState('');
+  const router = useRouter();
+  const auth = getAuth();
+  const getToken = async ()=>{
+    const item = await AsyncStorage.getItem("token");
+    try{
+      if(item!=null){
+        setToken(item);
+
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
   useEffect(()=>{
     const locationRequest = async()=>{
       let {status} =await Location.requestForegroundPermissionsAsync();
@@ -18,21 +33,28 @@ export default function App() {
         setLoading(false);
         return;
       }
+      getToken();
       var location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       setLoading(false);
+
     }
     locationRequest();
   },[loading]);
+  const login = async()=>{
+    getToken();
+    router.push({pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}});
+  }
   let userlocation = JSON.stringify(location);
   console.log(location);
+
   return (
     <Provider>
 
       <View style={styles.container}>
         <StatusBar style="auto" />
         {loading==true ? <ActivityIndicator size={24} color={'black'}/> :(
-          
+         token=='' ? 
            
             <>
                <Image source={require('./img/logo.png')} style={styles.logo}/>
@@ -50,11 +72,14 @@ export default function App() {
                   <Text style={styles.link}>Register</Text>
                 </Link>
               </View>
-            </>
-        )}
+            </>:(
+        router.push({pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}})
+      )
+       )}
       </View>
     </Provider>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -100,5 +125,6 @@ const styles = StyleSheet.create({
   link: {
     color: '#fd0136'
   }
+
 
 });
