@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import {MAP_API_KEY} from '@env';
 import MapViewDirections from 'react-native-maps-directions';
 import {Ionicons} from '@expo/vector-icons';
+import { getAuth } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Home(){
     const params = useSearchParams();
     var latitude = parseFloat(params.lat);
@@ -15,6 +17,8 @@ export default function Home(){
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(true);
     const [name , setName] = useState('');
+    const [token,setToken] = useState('');
+    const auth = getAuth();
     const apifetch=()=>{
         setLoading(true)
         fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=auditorium&location=${latitude}%2C${longitude}&radius=2000&type=auditorium&key=${MAP_API_KEY}`)
@@ -26,9 +30,21 @@ export default function Home(){
         })
         .catch(err=>console.log(err));
     }
-
+    const getToken = async ()=>{
+        const item = await AsyncStorage.getItem("token");
+        try{
+          if(item!=null){
+            setToken(item);
+    
+          }
+        }catch(err){
+          console.log(err);
+        }
+    }
     useEffect(()=>{
         apifetch();
+        getToken();
+        //console.log(auth.getUser(token));
         setLoading(false);
     },[])
     return(
