@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {View,Text,StyleSheet, Image} from 'react-native';
 import { Appbar,Card,TextInput,Divider,Button} from 'react-native-paper';
 import { useSearchParams } from 'expo-router';
+import { TouchableOpacity } from 'react-native-web';
 
 export default function Default (){
     const [checked,setChecked]=useState(false);
@@ -11,7 +12,7 @@ export default function Default (){
     return(
         <>
         <Appbar.Header style={{backgroundColor: 'white'}}>
-            <Appbar.BackAction actio />
+            <Appbar.BackAction  />
             <Appbar.Content title={params.item_name}/>
             
         </Appbar.Header>
@@ -26,7 +27,12 @@ export default function Default (){
                     <Text style={styles.foodname}>Biriyani</Text>
                     <Text style={styles.qty}>Qty: 5kg</Text>
                     </View>
-                    <Image source={{uri:'https://5.imimg.com/data5/ANDROID/Default/2022/5/NE/LE/RY/125143773/product-jpeg-500x500.jpg'}} style={styles.foodpic}/>
+                    <View style={styles.flexContainer}>
+                        <Image source={{uri:'https://5.imimg.com/data5/ANDROID/Default/2022/5/NE/LE/RY/125143773/product-jpeg-500x500.jpg'}} style={styles.foodpic}/>
+                        <TouchableOpacity style={styles.addBox}>
+                            <Text>add</Text>
+                        </TouchableOpacity>
+                    </View>
                 </Card.Content>
                 
             </Card>
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
     card:{
         display: 'flex',
         flexDirection: 'row',
-        height: 85,
+        height: 125,
         backgroundColor: 'white',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -65,7 +71,19 @@ const styles = StyleSheet.create({
     },
     foodpic:{
         height: 50,
-        width: 50
+        width: 50,
+        borderRadius:5,
+        marginTop:-20
+    },
+    flexContainer:{
+        flexDirection:'column',
+        justifyContent:'space-evenly'
+    },
+    addBox:{
+        borderRadius:10,
+        borderWidth:0.9,
+        height:30,
+        borderColor:'#FD0136',
     }
 
   });

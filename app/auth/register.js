@@ -101,9 +101,8 @@ const styles = StyleSheet.create({
     
     },
     header: {
-      left: -40,
       margin: 10,
       fontSize: 40,
-      fontWeight: 800
+      fontWeight: 800,
     }
   });
