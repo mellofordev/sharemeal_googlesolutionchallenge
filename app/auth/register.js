@@ -1,12 +1,19 @@
-import {View,Text,StyleSheet,Alert} from 'react-native';
-import { Card, Provider ,TextInput, Appbar, Button, ActivityIndicator} from 'react-native-paper';
+import {View,Text,StyleSheet,Alert,TextInput, Pressable} from 'react-native';
+import { Card, Provider, Appbar, Button, ActivityIndicator} from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import {getAuth,createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import {app} from '../../firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
+import { setBackgroundColorAsync } from "expo-navigation-bar";
 
 export default function Register(){
+
+  useEffect(()=>{
+    setBackgroundColorAsync("rgba(0, 0, 0, 0.005)");
+  });
+ 
     const router = useRouter();
     const auth = getAuth();
     const [email,setEmail] = useState('');
@@ -42,25 +49,23 @@ export default function Register(){
     console.log(user);
     return(
         <>
-        <Appbar.Header>
+        <StatusBar backgroundColor='transparent'/>
+        <Appbar.Header style={{backgroundColor:'white'}}>
             <Appbar.BackAction iconColor='black' onPress={()=>{router.back()}}/>
             <Appbar.Content title="Register"/>
         </Appbar.Header>
         <View style={styles.container}>
-            <Card style={{height:'auto',width:'90%'}}>
-            
-            <Card.Cover source={{uri:'https://i.ibb.co/4d376Jv/materialu.png'}}/>
+              <Text style={styles.header}>Create Your Account</Text>
           
-            <Card.Content style={{margin:5}}>
-              <TextInput label="email"  onChangeText={email=>setEmail(email)} style={{marginBottom:20}}/>
-              <TextInput label="password"  onChangeText={password=>setPassword(password)} secureTextEntry={true}  style={{marginBottom:20}}/>
-            </Card.Content>
-            <Card.Actions >
+              <TextInput placeholder="email"  onChangeText={email=>setEmail(email)} style={styles.textinput}/>
+              <TextInput placeholder="password"  onChangeText={password=>setPassword(password)} secureTextEntry={true}  style={styles.textinput}/>
+
               <Link href={'/provider'} asChild>
-                <Button onPress={()=>registerAccount()}>Register</Button>
+                  <Pressable style={styles.Pressable}><Text style={styles.Text}>Register</Text></Pressable>
+
+
               </Link>
-            </Card.Actions>
-        </Card>
+
         </View>
         </>
     );
@@ -74,4 +79,31 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       marginBottom:100
     },
+    textinput:{
+      backgroundColor: 'transparent',
+      margin: 0,
+      
+      marginBottom:30, backgroundColor:'#F5F8FA',borderRadius: 15, height: 50, width:'90%', padding:15, 
+  
+    },
+    Pressable: {
+      backgroundColor: '#fd0136',
+      width: '90%',
+      padding:5,
+      borderRadius:20
+    },
+    Text: {
+      fontSize: 20,
+      color: 'white',
+      padding: 5,
+      textAlign: 'center'
+  
+    
+    },
+    header: {
+      left: -40,
+      margin: 10,
+      fontSize: 40,
+      fontWeight: 800
+    }
   });

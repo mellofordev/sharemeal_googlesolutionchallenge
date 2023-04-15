@@ -7,6 +7,8 @@ import { Card, Provider , ActivityIndicator} from 'react-native-paper';
 import { Link , useRouter} from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getAuth} from 'firebase/auth';
+import { setBackgroundColorAsync } from "expo-navigation-bar";
+
 export default function App() {
   const [location,setLocation] = useState({});
   const [loading,setLoading] = useState(true);
@@ -24,6 +26,9 @@ export default function App() {
       console.log(err);
     }
   }
+  useEffect(()=>{
+    setBackgroundColorAsync("rgba(0, 0, 0, 0.005)");
+  });
   useEffect(()=>{
     const locationRequest = async()=>{
       let {status} =await Location.requestForegroundPermissionsAsync();
@@ -68,7 +73,7 @@ export default function App() {
               </Link>
               <View style={styles.footer}>
                 <Text>If you are not registered, </Text>
-                <Link href='#'>
+                <Link href='/auth/register'>
                   <Text style={styles.link}>Register</Text>
                 </Link>
               </View>
