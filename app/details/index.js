@@ -11,7 +11,7 @@ export default function Default (){
     return(
         <>
         <Appbar.Header style={{backgroundColor: 'white'}}>
-            <Appbar.BackAction actio />
+            <Appbar.BackAction  />
             <Appbar.Content title={params.item_name}/>
             
         </Appbar.Header>
