@@ -8,7 +8,12 @@ import MapViewDirections from 'react-native-maps-directions';
 import {Ionicons} from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setBackgroundColorAsync } from "expo-navigation-bar";
+
 export default function Home(){
+    useEffect(()=>{
+        setBackgroundColorAsync("rgba(0, 0, 0, 0.005)");
+    });
     const params = useSearchParams();
     var latitude = parseFloat(params.lat);
     var longitude = parseFloat(params.long);
@@ -49,9 +54,7 @@ export default function Home(){
     },[])
     return(
         <>
-        <Appbar.Header>
-                <Appbar.Content title="Home"/>
-        </Appbar.Header>
+
         <View style={styles.container}>
             <MapView
                 style={{height:'60%',width:'100%'}}
@@ -103,8 +106,8 @@ export default function Home(){
                                          style={{height:100,width:100,borderRadius:15,marginTop:5}}
                                   /> */}
                                 <Link href={{pathname:'/details',params:{item_name:i.name,lat:variantCoords.lat,long:variantCoords.long,add:i.vicinity}}} asChild>
-                                    <TouchableOpacity  style={{backgroundColor:'#0096FF',height:100,width:100,borderRadius:15,marginTop:5,justifyContent:'center',alignItems:'center'}}>
-                                        <Ionicons name='navigate'  size={44} color={'white'}/>
+                                    <TouchableOpacity  style={{backgroundColor:'#0096FF',height:50,width:50,borderRadius:15,marginTop:5,justifyContent:'center',alignItems:'center'}}>
+                                        <Ionicons name='navigate'  size={15} color={'white'}/>
                                     </TouchableOpacity>
                                 </Link>
 

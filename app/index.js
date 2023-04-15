@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import { Card, Provider , ActivityIndicator} from 'react-native-paper';
 import { Link , useRouter} from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getAuth} from 'firebase/auth';
+import { setBackgroundColorAsync } from "expo-navigation-bar";
 import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
+
 export default function App() {
   const [location,setLocation] = useState({});
   const [loading,setLoading] = useState(true);
@@ -35,6 +38,9 @@ export default function App() {
     }
 
   }
+  useEffect(()=>{
+    setBackgroundColorAsync("rgba(0, 0, 0, 0.005)");
+  });
   useEffect(()=>{
     const locationRequest = async()=>{
       let {status} =await Location.requestForegroundPermissionsAsync();
