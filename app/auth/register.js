@@ -8,9 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { setBackgroundColorAsync } from "expo-navigation-bar";
 import * as DocumentPicker from 'expo-document-picker';
+import { useSearchParams } from 'expo-router';
 
 export default function Register(){
-
+  const params = useSearchParams();
   useEffect(()=>{
     setBackgroundColorAsync("rgba(0, 0, 0, 0.005)");
   });
@@ -85,7 +86,9 @@ export default function Register(){
               }
               <Pressable onPress={()=>{
                 registerAccount();
-                if(user!=null){
+                if(select=='ngo'){
+                  router.push({pathname:'/home',params:params})
+                }else{
                   router.push('/provider')
                 }
               }} style={styles.Pressable}><Text style={styles.Text}>Register</Text></Pressable>

@@ -8,6 +8,7 @@ import { Link , useRouter} from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setBackgroundColorAsync } from "expo-navigation-bar";
 import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
+import { TouchableOpacity } from 'react-native';
 
 export default function App() {
   const [location,setLocation] = useState({});
@@ -16,7 +17,7 @@ export default function App() {
   const [password,setPassword] = useState('');
   const [error,setError] = useState(false);
   const [token ,setToken] = useState(null);
-  const [selected,setSelect]  = useState('n');
+  const [selected,setSelect]  = useState('/details');
   const router = useRouter();
   const auth = getAuth();
   const getToken = async ()=>{
@@ -94,10 +95,10 @@ export default function App() {
               <TextInput placeholder='username'  onChangeText={email=>setEmail(email)} style={styles.textinput} />
               <TextInput placeholder='password'  onChangeText={password=>setPassword(password)} style={styles.textinput} secureTextEntry={true}/>
               <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
-                <Chip onPress={()=>{setSelect('n')}} mode={selected=='n' ? 'flat': 'outlined'} style={{margin:4}}>ngo</Chip>
-                <Chip onPress={()=>setSelect('p')} mode={selected=='p' ? 'flat': 'outlined'} style={{margin:4}}>provider</Chip>
+                <Chip onPress={()=>{setSelect('/details')}} mode={selected=='/details' ? 'flat': 'outlined'} style={{margin:4}}>ngo</Chip>
+                <Chip onPress={()=>setSelect('/provider')} mode={selected=='/provider' ? 'flat': 'outlined'} style={{margin:4}}>provider</Chip>
               </View>
-              <Link href={{pathname:'/provider',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
+              <Link href={{pathname:`${selected}`,params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
                  <Pressable 
                  onPress={()=>{
                   login();
@@ -106,9 +107,11 @@ export default function App() {
               </Link>
               <View style={styles.footer}>
                 <Text>If you are not registered, </Text>
-                <Link href='/auth/register'>
-                  <Text style={styles.link}>Register</Text>
-                </Link>
+                  <TouchableOpacity onPress={()=>{
+                    router.push({pathname:'/auth/register',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}})
+                  }}>
+                    <Text style={styles.link}>Register</Text>
+                  </TouchableOpacity>
               </View>
             </>:(
               router.push({pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}})
