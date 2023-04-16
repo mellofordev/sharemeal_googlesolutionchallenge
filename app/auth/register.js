@@ -1,5 +1,5 @@
-import {View,Text,StyleSheet,Alert,TextInput, Pressable} from 'react-native';
-import { Card, Provider, Appbar, Button, ActivityIndicator} from 'react-native-paper';
+import {View,Text,StyleSheet,Alert,TextInput, Pressable,TouchableOpacity} from 'react-native';
+import { Card, Provider, Appbar, Button, ActivityIndicator,Chip} from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import {getAuth,createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import {app} from '../../firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { setBackgroundColorAsync } from "expo-navigation-bar";
+import * as DocumentPicker from 'expo-document-picker';
 
 export default function Register(){
 
@@ -18,7 +19,9 @@ export default function Register(){
     const auth = getAuth();
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const [user,setUser]=useState();
+    const [user,setUser]=useState("");
+    const [select,setSelect] = useState('ngo');
+    const [uploadFile,setUploadFile] = useState('not');
     // useEffect(()=>{
     //   if(app){
     //     onAuthStateChanged(auth,(user)=>{
@@ -46,6 +49,15 @@ export default function Register(){
         alert(err.message);
       })
     }
+    const upload = ()  =>{
+     DocumentPicker.getDocumentAsync({type:'image/*'})
+     .then(item =>{
+        setUploadFile(item.type);
+     }).catch(err=>{
+      console.log(err);
+     })
+
+    }
     console.log(user);
     return(
         <>
@@ -59,13 +71,24 @@ export default function Register(){
           
               <TextInput placeholder="email"  onChangeText={email=>setEmail(email)} style={styles.textinput}/>
               <TextInput placeholder="password"  onChangeText={password=>setPassword(password)} secureTextEntry={true}  style={styles.textinput}/>
-
-              <Link href={'/provider'} asChild>
-                  <Pressable style={styles.Pressable}><Text style={styles.Text}>Register</Text></Pressable>
-
-
-              </Link>
-
+              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
+                <Text style={{fontSize:18,margin:6}}>Select the type:</Text>
+                <Chip icon={"information"} mode={select=='ngo' ?'outlined' : 'flat'} onPress={()=>{setSelect('provider')}} style={{margin:5}}>provider</Chip>
+                <Chip icon={"information"} mode={select!='provider' ?'flat' : 'outlined'} onPress={()=>{setSelect('ngo')}}  style={{margin:5}}>NGO</Chip>
+              </View>
+              {select=='ngo' && 
+                <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
+                    <TouchableOpacity onPress={()=>{upload();}} style={[styles.textinput,styles.upload]}>
+                      <Text>{uploadFile=='success' ? 'File uploaded' : 'upload verification'}</Text>
+                    </TouchableOpacity>
+                </View>
+              }
+              <Pressable onPress={()=>{
+                registerAccount();
+                if(user!=null){
+                  router.push('/provider')
+                }
+              }} style={styles.Pressable}><Text style={styles.Text}>Register</Text></Pressable>
         </View>
         </>
     );
@@ -82,7 +105,6 @@ const styles = StyleSheet.create({
     textinput:{
       backgroundColor: 'transparent',
       margin: 0,
-      
       marginBottom:30, backgroundColor:'#F5F8FA',borderRadius: 15, height: 50, width:'90%', padding:15, 
   
     },
@@ -104,5 +126,10 @@ const styles = StyleSheet.create({
       margin: 10,
       fontSize: 40,
       fontWeight: 800,
+    },
+    upload:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      alignItems:'flex-start'
     }
   });

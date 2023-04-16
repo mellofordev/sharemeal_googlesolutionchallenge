@@ -3,7 +3,7 @@ import { Alert, StyleSheet, View, TextInput, Pressable, Text, Image} from 'react
 import { AntDesign } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import { Card, Provider , ActivityIndicator} from 'react-native-paper';
+import { Card, Provider , ActivityIndicator,Chip} from 'react-native-paper';
 import { Link , useRouter} from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setBackgroundColorAsync } from "expo-navigation-bar";
@@ -16,6 +16,7 @@ export default function App() {
   const [password,setPassword] = useState('');
   const [error,setError] = useState(false);
   const [token ,setToken] = useState(null);
+  const [selected,setSelect]  = useState('n');
   const router = useRouter();
   const auth = getAuth();
   const getToken = async ()=>{
@@ -92,8 +93,11 @@ export default function App() {
  
               <TextInput placeholder='username'  onChangeText={email=>setEmail(email)} style={styles.textinput} />
               <TextInput placeholder='password'  onChangeText={password=>setPassword(password)} style={styles.textinput} secureTextEntry={true}/>
-
-              <Link href={{pathname:'/home',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
+              <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
+                <Chip onPress={()=>{setSelect('n')}} mode={selected=='n' ? 'flat': 'outlined'} style={{margin:4}}>ngo</Chip>
+                <Chip onPress={()=>setSelect('p')} mode={selected=='p' ? 'flat': 'outlined'} style={{margin:4}}>provider</Chip>
+              </View>
+              <Link href={{pathname:'/provider',params:{lat:location["coords"]["latitude"],long:location["coords"]["longitude"]}}} asChild>
                  <Pressable 
                  onPress={()=>{
                   login();

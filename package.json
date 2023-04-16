@@ -17,6 +17,7 @@
     "expo": "~48.0.5",
     "expo-constants": "~14.2.1",
     "expo-dev-client": "~2.1.6",
+    "expo-document-picker": "~11.2.2",
     "expo-linking": "~4.0.1",
     "expo-location": "~15.1.1",
     "expo-navigation-bar": "^1.1.2",

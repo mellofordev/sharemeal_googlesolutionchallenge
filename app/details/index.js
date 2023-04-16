@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import {View,Text,StyleSheet, Image} from 'react-native';
+import {View,Text,StyleSheet, Image,TouchableOpacity} from 'react-native';
 import { Appbar,Card,TextInput,Divider,Button} from 'react-native-paper';
-import { useSearchParams } from 'expo-router';
-import { TouchableOpacity } from 'react-native-web';
+import { useRouter, useSearchParams } from 'expo-router';
 
 export default function Default (){
-    const [checked,setChecked]=useState(false);
-    const [request,setRequest] = useState('Request');
+    
     const params = useSearchParams();
-
+    const router = useRouter();
     return(
         <>
         <Appbar.Header style={{backgroundColor: 'white'}}>
-            <Appbar.BackAction  />
+            <Appbar.BackAction onPress={()=>router.back()} />
             <Appbar.Content title={params.item_name}/>
             
         </Appbar.Header>
@@ -30,7 +28,7 @@ export default function Default (){
                     <View style={styles.flexContainer}>
                         <Image source={{uri:'https://5.imimg.com/data5/ANDROID/Default/2022/5/NE/LE/RY/125143773/product-jpeg-500x500.jpg'}} style={styles.foodpic}/>
                         <TouchableOpacity style={styles.addBox}>
-                            <Text>add</Text>
+                            <Text style={{textAlign:'center'}}>add</Text>
                         </TouchableOpacity>
                     </View>
                 </Card.Content>
@@ -70,20 +68,23 @@ const styles = StyleSheet.create({
         color: 'grey'
     },
     foodpic:{
-        height: 50,
-        width: 50,
+        height: 70,
+        width: 70,
         borderRadius:5,
-        marginTop:-20
     },
     flexContainer:{
         flexDirection:'column',
-        justifyContent:'space-evenly'
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        
     },
     addBox:{
         borderRadius:10,
         borderWidth:0.9,
         height:30,
         borderColor:'#FD0136',
+        width:90,
+        marginTop:9
     }
 
   });

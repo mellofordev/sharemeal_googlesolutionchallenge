@@ -1,7 +1,7 @@
 import {View,StyleSheet,SafeAreaView, ScrollView,TouchableOpacity,Image} from 'react-native';
 import { ActivityIndicator, Appbar, Card,Divider,Text } from 'react-native-paper';
 import MapView,{Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import { useSearchParams,Link } from 'expo-router';
+import { useSearchParams,Link, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {MAP_API_KEY} from '@env';
 import MapViewDirections from 'react-native-maps-directions';
@@ -24,6 +24,7 @@ export default function Home(){
     const [name , setName] = useState('');
     const [token,setToken] = useState('');
     const auth = getAuth();
+    const router = useRouter();
     const apifetch=()=>{
         setLoading(true)
         fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=auditorium&location=${latitude}%2C${longitude}&radius=2000&type=auditorium&key=${MAP_API_KEY}`)
@@ -44,6 +45,15 @@ export default function Home(){
           }
         }catch(err){
           console.log(err);
+        }
+    }
+    const logout = async() =>{
+        try{
+            await AsyncStorage.removeItem("token");
+            router.push('index')
+            alert("Loged out successfuly");
+        }catch(err){
+            alert(err);
         }
     }
     useEffect(()=>{
@@ -84,7 +94,6 @@ export default function Home(){
             </MapView>
             <Card style={{height:'100%',flex:1}}>
                 <Card.Title title="Live"/>
-                
                 <Card.Content>
                     <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:30}} showsVerticalScrollIndicator={false}>
                        
@@ -117,9 +126,19 @@ export default function Home(){
                         );
                      })
                      )}
+                    <Card.Content style={{marginBottom:10}}>
+                        <Card.Title title="Profile"/>
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <TouchableOpacity onPress={()=>{
+                                logout();
+                                }}
+                            ><Text style={{color:'#FD0136',fontSize:18}}>logout</Text></TouchableOpacity>
+                            <TouchableOpacity><Text style={{color:'black',fontSize:18}}>settings</Text></TouchableOpacity>
+                            <TouchableOpacity><Text style={{color:'blue',fontSize:18}}>donate</Text></TouchableOpacity>
+                        </View>
+                    </Card.Content>
                     </ScrollView>
                 </Card.Content>
-               
             </Card>
         </View>
         </>

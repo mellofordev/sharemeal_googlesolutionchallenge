@@ -1,11 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {View,Text,StyleSheet, TextInput} from 'react-native';
-import { Appbar, Card, Checkbox, Divider,Button } from 'react-native-paper';
+import { Appbar, Card, Checkbox, Divider,Button,Chip } from 'react-native-paper';
 
 export default function Provider(){
     const router = useRouter();
     const [checked,setChecked] = useState(false);
+    const [selected,setSelected] = useState('i');
     return(
         <>
 
@@ -21,9 +22,10 @@ export default function Provider(){
                         <TextInput style={styles.textinput} placeholder='food'/>
                         <TextInput style={styles.textinput} placeholder='quatity' />
                     </View>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <Text style={{fontSize:15}}>Live</Text>
-                        <Checkbox onPress={()=>{checked==true?setChecked(false):setChecked(true)}} status={checked==true?'checked':'unchecked'}/>
+                    <View style={{flexDirection:'column',height:100,margin:5}}>
+                        <Text style={{fontSize:18}}>Enter the mode :</Text>
+                        <Chip onPress={()=>{setSelected('i')}} mode={selected=='i' ? 'flat' :'outlined'} style={{marginBottom:10}}>individual</Chip>
+                        <Chip onPress={()=>{setSelected('p')}} mode={selected=='p' ? 'flat' :'outlined'}>institutional</Chip>
                     </View>
                 </Card.Content>
                 <Button>Submit</Button>
